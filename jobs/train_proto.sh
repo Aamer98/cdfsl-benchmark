@@ -31,7 +31,7 @@ cp -r ~/scratch/CD-FSL_Datasets/* .
 
 echo "Extract to dataset folder"
 date +"%T"
-cd LibFewShot/dataset
+cd cdfsl-benchmark/datasets
 
 # tar -xf $SLURM_TMPDIR/CIFAR100.tar.gz
 # tar -xf $SLURM_TMPDIR/CUB_200_2011_FewShot.tar.gz

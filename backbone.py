@@ -12,8 +12,9 @@ def init_layer(L):
         n = L.kernel_size[0]*L.kernel_size[1]*L.out_channels
         L.weight.data.normal_(0,math.sqrt(2.0/float(n)))
     elif isinstance(L, nn.BatchNorm2d):
-        L.weight.data.fill_(1)
-        L.bias.data.fill_(0)
+        pass
+        #L.weight.data.fill_(1)
+        #L.bias.data.fill_(0)
 
 class Flatten(nn.Module):
     def __init__(self):
@@ -31,10 +32,10 @@ class SimpleBlock(nn.Module):
         self.outdim = outdim
 
         self.C1 = nn.Conv2d(indim, outdim, kernel_size=3, stride=2 if half_res else 1, padding=1, bias=False)
-        self.BN1 = nn.BatchNorm2d(outdim)
+        self.BN1 = nn.BatchNorm2d(outdim, affine = False)
     
         self.C2 = nn.Conv2d(outdim, outdim,kernel_size=3, padding=1,bias=False)
-        self.BN2 = nn.BatchNorm2d(outdim)
+        self.BN2 = nn.BatchNorm2d(outdim, affine = False)
 
         self.relu1 = nn.ReLU(inplace=True)
         self.relu2 = nn.ReLU(inplace=True)
@@ -47,7 +48,7 @@ class SimpleBlock(nn.Module):
         if indim!=outdim:
 
             self.shortcut = nn.Conv2d(indim, outdim, 1, 2 if half_res else 1, bias=False)
-            self.BNshortcut = nn.BatchNorm2d(outdim)
+            self.BNshortcut = nn.BatchNorm2d(outdim, affine = False)
 
             self.parametrized_layers.append(self.shortcut)
             self.parametrized_layers.append(self.BNshortcut)
@@ -79,11 +80,11 @@ class BottleneckBlock(nn.Module):
         self.outdim = outdim
 
         self.C1 = nn.Conv2d(indim, bottleneckdim, kernel_size=1,  bias=False)
-        self.BN1 = nn.BatchNorm2d(bottleneckdim)
+        self.BN1 = nn.BatchNorm2d(bottleneckdim, affine = False)
         self.C2 = nn.Conv2d(bottleneckdim, bottleneckdim, kernel_size=3, stride=2 if half_res else 1,padding=1)
-        self.BN2 = nn.BatchNorm2d(bottleneckdim)
+        self.BN2 = nn.BatchNorm2d(bottleneckdim, affine = False)
         self.C3 = nn.Conv2d(bottleneckdim, outdim, kernel_size=1, bias=False)
-        self.BN3 = nn.BatchNorm2d(outdim)
+        self.BN3 = nn.BatchNorm2d(outdim, affine = False)
 
         self.relu = nn.ReLU()
         self.parametrized_layers = [self.C1, self.BN1, self.C2, self.BN2, self.C3, self.BN3]
@@ -130,7 +131,7 @@ class ResNet(nn.Module):
 
         conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
                                            bias=False)
-        bn1 = nn.BatchNorm2d(64)
+        bn1 = nn.BatchNorm2d(64, affine = False)
 
         relu = nn.ReLU()
         pool1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)

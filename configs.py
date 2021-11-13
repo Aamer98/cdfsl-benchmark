@@ -1,9 +1,9 @@
 save_dir                    = './logs'
 
-miniImageNet_path           	= '/ssd/miniImagenet'
+miniImageNet_path           	= './datasets/miniImagenet'
 DTD_path 						= '/ssd/dtd/images/'
 
 ISIC_path = "/ssd/data/ISIC"
 ChestX_path = "/ssd/data/chestX"
 CropDisease_path = "/ssd/data/CropDiseases"
-EuroSAT_path = "/ssd/data/EuroSAT/2750"
+EuroSAT_path = "./datasets/2750"

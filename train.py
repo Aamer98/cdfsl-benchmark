@@ -38,7 +38,13 @@ def train(base_loader, model, optimization, start_epoch, stop_epoch, params):
     return model
 
 if __name__=='__main__':
-    np.random.seed(10)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    torch.manual_seed(0)
+    torch.cuda.manual_seed(0)
+    np.random.seed(0)
+    random.seed(0)
+    
     params = parse_args('train')
 
     image_size = 224

@@ -31,7 +31,7 @@ cp -r ~/scratch/CD-FSL_Datasets/* .
 
 echo "Extract to dataset folder"
 date +"%T"
-cd cdfsl-benchmark/datasets
+
 
 # tar -xf $SLURM_TMPDIR/CIFAR100.tar.gz
 # tar -xf $SLURM_TMPDIR/CUB_200_2011_FewShot.tar.gz
@@ -49,12 +49,12 @@ echo "--------------------------------------------------------------------------
 
 echo "---------------------------------------<Run the program>------------------------------------"
 date +"%T"
+cd cdfsl-benchmark
 
-cd ..
 
 python train.py --dataset miniImageNet --model ResNet10  --method protonet --n_shot 5 --train_aug
 
 
 
 cd $SLURM_TMPDIR
-cp -r $SLURM_TMPDIR/cdfsl-benchmark ~/scratch/cdfsl-benchmark/
+cp -r $SLURM_TMPDIR/cdfsl-benchmark/ ~/scratch/cdfsl-benchmark/
